@@ -125,7 +125,33 @@
 </head>
 <body class="antialiased selection:bg-cyber-purple selection:text-white">
 
-    <!-- Background Canvas -->
+    <div id="intro-screen" class="fixed inset-0 z-[9999] bg-[#05050A] flex flex-col items-center justify-center transition-all duration-1000 overflow-hidden">
+        <!-- Background Grid Matrix -->
+        <div class="absolute inset-0 bg-[radial-gradient(#00f0ff_1px,transparent_1px)] [background-size:32px_32px] opacity-10"></div>
+        
+        <!-- Central Holographic HUD Rings -->
+        <div class="relative flex items-center justify-center w-56 h-56 mb-8">
+            <div class="absolute inset-0 rounded-full border border-cyber-blue/30 animate-spin" style="animation-duration: 12s;"></div>
+            <div class="absolute inset-4 rounded-full border border-dashed border-cyber-purple/40 animate-spin" style="animation-duration: 18s; animation-direction: reverse;"></div>
+            <div class="absolute inset-8 rounded-full border border-cyber-blue/20 animate-ping" style="animation-duration: 3s;"></div>
+            
+            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-cyber-blue/20 to-cyber-purple/20 backdrop-blur-md flex items-center justify-center shadow-[0_0_35px_#00F0FF]">
+                <i class="fa-solid fa-microphone-lines text-cyber-blue text-3xl animate-pulse"></i>
+            </div>
+        </div>
+
+        <!-- Cyber Boot Text Logs -->
+        <div class="text-center font-mono max-w-md px-4 relative z-10">
+            <div class="text-xs text-cyber-blue tracking-widest mb-2 font-bold text-glow-blue">[ SECURE AUDIO ENCLAVE BOOT ]</div>
+            <div id="boot-log-text" class="text-sm text-gray-300 h-8 flex items-center justify-center tracking-wider">INITIALIZING NEURAL NODES...</div>
+        </div>
+
+        <!-- Enter System Button -->
+        <button id="enter-sys-btn" class="mt-8 px-8 py-3 rounded-full bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-mono text-sm font-bold tracking-wider transition-all duration-300 hover:shadow-[0_0_25px_#00F0FF] hover:scale-105 cursor-pointer relative z-10 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+            [ 進入 PHONOSEC 系統 ]
+        </button>
+    </div>
+
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
@@ -161,7 +187,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center px-6 pt-20">
         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyber-blue/10 via-cyber-dark/50 to-cyber-black z-0"></div>
         
@@ -187,7 +212,6 @@
         </div>
     </section>
 
-    <!-- About & Origin Section -->
     <section id="about" class="py-24 px-6 relative">
         <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
             <div class="reveal">
@@ -232,7 +256,6 @@
         </div>
     </section>
 
-    <!-- Goals Section -->
     <section id="goals" class="py-24 px-6 bg-cyber-dark/80 border-y border-gray-800/50">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center reveal">團隊目標 <span class="text-cyber-blue">Objectives</span></h2>
@@ -262,7 +285,6 @@
         </div>
     </section>
 
-    <!-- Departments & Reports Section -->
     <section id="departments" class="py-24 px-6 relative overflow-hidden">
         <!-- Decoration -->
         <div class="absolute right-0 top-1/4 w-96 h-96 bg-cyber-blue/5 rounded-full blur-[100px] -z-10"></div>
@@ -349,7 +371,6 @@
         </div>
     </section>
 
-    <!-- Future Roadmap -->
     <section id="roadmap" class="py-24 px-6 bg-cyber-dark/80 border-t border-gray-800/50">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold mb-10 text-center reveal">開發項目預計方向 <span class="text-sm font-normal text-cyber-purple bg-cyber-purple/20 px-3 py-1 rounded-full ml-2">規劃中</span></h2>
@@ -391,7 +412,6 @@
         </div>
     </section>
 
-    <!-- Team Section -->
     <section id="team" class="py-24 px-6 relative">
         <div class="max-w-6xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-4 reveal">團隊成員 <span class="text-cyber-blue">Members</span></h2>
@@ -460,7 +480,6 @@
         </div>
     </section>
 
-    <!-- Footer / Contact -->
     <footer id="contact" class="bg-black py-12 px-6 border-t border-gray-800 relative z-10">
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -505,8 +524,48 @@
             }
         }
         
-        // Start typing slightly after load
-        setTimeout(typeWriter, 500);
+        // Cinematic Intro & Boot Sequence Logic
+        window.addEventListener('load', () => {
+            const introScreen = document.getElementById('intro-screen');
+            const bootLog = document.getElementById('boot-log-text');
+            const enterBtn = document.getElementById('enter-sys-btn');
+
+            const logs = [
+                "ESTABLISHING VOICE NEURAL MESH...",
+                "CALIBRATING ANTI-SPOOFING FILTERS...",
+                "LOADING ANOMALY DETECTION LABS...",
+                "SYSTEM SECURE. READY FOR ACCESS."
+            ];
+
+            let logIndex = 0;
+            const logInterval = setInterval(() => {
+                if (logIndex < logs.length) {
+                    bootLog.innerText = logs[logIndex];
+                    logIndex++;
+                } else {
+                    clearInterval(logInterval);
+                    bootLog.innerText = "ACCESS GRANTED // PHONOSEC INITIATIVE";
+                    bootLog.classList.add('text-cyber-blue', 'font-bold');
+                }
+            }, 650);
+
+            function dismissIntro() {
+                introScreen.classList.add('opacity-0', 'scale-110', 'pointer-events-none');
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    setTimeout(typeWriter, 300);
+                }, 1000);
+            }
+
+            enterBtn.addEventListener('click', dismissIntro);
+            
+            // Auto dismiss safety fallback after logs finish
+            setTimeout(() => {
+                if (introScreen.style.display !== 'none') {
+                    dismissIntro();
+                }
+            }, 3500);
+        });
 
         // 2. Scroll Reveal Observer
         const revealElements = document.querySelectorAll('.reveal');
