@@ -130,7 +130,7 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center glass-panel !border-x-0 !border-t-0 !rounded-none">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center glass-panel !border-x-0 !border-t-0 !rounded-none relative z-20">
             <div class="flex items-center gap-2 text-cyber-blue font-bold text-xl tracking-wider">
                 <i class="fa-solid fa-fingerprint text-cyber-purple"></i>
                 <span>PHONOSEC</span>
@@ -142,11 +142,22 @@
                 <a href="#roadmap" class="hover:text-cyber-blue transition-colors">未來展望</a>
                 <a href="#team" class="hover:text-cyber-blue transition-colors">成員</a>
             </div>
-            <!-- Mobile Menu Button (Simplified for UI, relies on scroll) -->
+            <!-- Desktop Contact Button -->
             <a href="#contact" class="hidden md:block px-5 py-2 rounded-full bg-transparent border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 shadow-[0_0_10px_rgba(0,240,255,0.2)] hover:shadow-[0_0_15px_rgba(0,240,255,0.6)]">
                 聯繫我們
             </a>
-            <button class="md:hidden text-cyber-blue"><i class="fa-solid fa-bars text-xl"></i></button>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-cyber-blue text-2xl focus:outline-none relative z-30 transition-transform"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-cyber-black/95 backdrop-blur-xl flex-col items-center justify-center gap-8 hidden opacity-0 transition-opacity duration-300 z-10">
+            <a href="#about" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">關於團隊</a>
+            <a href="#goals" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">核心目標</a>
+            <a href="#departments" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">研究部門</a>
+            <a href="#roadmap" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">未來展望</a>
+            <a href="#team" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">成員</a>
+            <a href="#contact" class="mobile-link mt-4 px-8 py-3 rounded-full bg-transparent border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.4)]">聯繫我們</a>
         </div>
     </nav>
 
@@ -197,9 +208,9 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 gap-4 reveal" style="transition-delay: 200ms;">
-                <div class="col-span-2 mb-2">
-                    <h3 class="text-xl font-bold text-cyber-blue mb-4">團隊講求 Core Values</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal" style="transition-delay: 200ms;">
+                <div class="col-span-1 sm:col-span-2 mb-2 text-center sm:text-left">
+                    <h3 class="text-xl font-bold text-cyber-blue mb-2">團隊講求 Core Values</h3>
                 </div>
                 <!-- Value Tags -->
                 <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0s;">
@@ -214,7 +225,7 @@
                 <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0.6s;">
                     <i class="fa-solid fa-layer-group text-2xl text-cyber-blue"></i><span class="font-medium">高彈性 & 穩定</span>
                 </div>
-                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 col-span-2 text-center justify-center border-cyber-purple/30">
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 col-span-1 sm:col-span-2 justify-center border-cyber-purple/30">
                     <i class="fa-solid fa-shield-virus text-xl text-cyber-purple"></i><span class="font-medium">高安全性與持續創新</span>
                 </div>
             </div>
@@ -435,11 +446,11 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-auto">
-                            <a href="https://www.instagram.com/phonosec_initiative/" target="_blank" class="flex-1 py-2 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
+                        <div class="flex flex-col sm:flex-row gap-3 mt-auto">
+                            <a href="https://www.instagram.com/phonosec_initiative/" target="_blank" class="flex-1 py-2.5 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
                                 <i class="fa-brands fa-instagram mr-1"></i> IG 申請
                             </a>
-                            <a href="mailto:phonosec@gmail.com" class="flex-1 py-2 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
+                            <a href="mailto:phonosec@gmail.com" class="flex-1 py-2.5 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
                                 <i class="fa-regular fa-envelope mr-1"></i> Email 申請
                             </a>
                         </div>
@@ -523,8 +534,54 @@
                 navbar.querySelector('.glass-panel').classList.add('!bg-transparent', '!border-none', '!shadow-none');
             } else {
                 navbar.classList.remove('bg-black/80', 'shadow-lg');
-                navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
+                // Only restore style if mobile menu is NOT open
+                if (!isMenuOpen) {
+                    navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
+                }
             }
+        });
+
+        // 3.5 Mobile Menu Logic (Hamburger & Prevent Scroll)
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const icon = mobileMenuBtn.querySelector('i');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                // Open Menu
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Lock background scroll
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                // Ensure navbar bg is transparent when menu is open
+                navbar.querySelector('.glass-panel').classList.add('!bg-transparent', '!border-none', '!shadow-none');
+            } else {
+                // Close Menu
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                }, 300); // match duration-300
+                document.body.style.overflow = ''; // Restore background scroll
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                // Restore navbar style if at top
+                if (window.scrollY <= 50) {
+                    navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
+                }
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isMenuOpen) toggleMenu();
+            });
         });
 
         // 4. Background Canvas Animation (Soundwave / Cyber Nodes)
