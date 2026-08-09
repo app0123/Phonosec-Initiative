@@ -386,7 +386,7 @@
             <h2 class="text-3xl font-bold mb-4 reveal">團隊成員 <span class="text-cyber-blue">Members</span></h2>
             <p class="text-gray-400 mb-12 reveal">目前核心開發由一人負責，歡迎有興趣的朋友與我們聯繫討論。</p>
 
-            <div class="flex flex-wrap justify-center gap-8 reveal">
+            <div class="flex flex-wrap justify-center gap-8 reveal mb-16">
                 <!-- Founder -->
                 <div class="glass-panel p-6 rounded-2xl w-64 group hover:border-cyber-blue transition-colors">
                     <div class="w-24 h-24 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-blue relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-shadow">
@@ -396,25 +396,54 @@
                     <p class="text-xs text-cyber-blue font-mono mb-2">Founder / Core Dev</p>
                     <p class="text-sm text-gray-400">團隊創辦人<br>團隊執行與決策人</p>
                 </div>
+            </div>
 
-                <!-- Tester 1 -->
-                <div class="glass-panel p-6 rounded-2xl w-56 group hover:border-cyber-purple transition-colors mt-0 md:mt-8">
-                    <div class="w-20 h-20 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-purple relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] transition-shadow">
-                        <i class="fa-solid fa-paw text-3xl text-gray-400 group-hover:text-white transition-colors"></i>
+            <!-- Join Us Action Area -->
+            <div class="glass-panel max-w-3xl mx-auto p-8 rounded-2xl reveal relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-cyber-blue/5 to-cyber-purple/5"></div>
+                <h3 class="text-2xl font-bold text-white mb-8 relative z-10 tracking-wider">加入我們 <span class="text-cyber-blue text-glow-blue">Join Phonosec</span></h3>
+                
+                <div class="grid md:grid-cols-2 gap-6 relative z-10 text-left">
+                    <!-- Tester Application -->
+                    <div class="bg-gray-900/60 p-6 rounded-xl border border-gray-700 hover:border-cyber-blue transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-3 group-hover:text-cyber-blue transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-vial-circle-check text-cyber-blue"></i> 招募團隊測試員
+                            </h4>
+                            <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                                協助我們進行語音辨識與防偽系統的早期測試，提供寶貴的反饋數據，共同推動技術發展。
+                            </p>
+                        </div>
+                        <a href="https://sites.google.com/view/team-tester-/%E9%A6%96%E9%A0%81" target="_blank" class="block w-full py-2.5 text-center rounded border border-cyber-blue/50 text-cyber-blue hover:bg-cyber-blue hover:text-cyber-dark hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all font-medium text-sm">
+                            <i class="fa-solid fa-link mr-1"></i> 填寫測試員申請表
+                        </a>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">熊熊</h3>
-                    <p class="text-xs text-cyber-purple font-mono mb-2">QA Tester</p>
-                    <p class="text-sm text-gray-400">已參與團隊測試員</p>
-                </div>
 
-                <!-- Tester 2 -->
-                <div class="glass-panel p-6 rounded-2xl w-56 group hover:border-cyber-purple transition-colors mt-0 md:mt-8">
-                    <div class="w-20 h-20 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-purple relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] transition-shadow">
-                        <i class="fa-solid fa-ghost text-3xl text-gray-400 group-hover:text-white transition-colors"></i>
+                    <!-- Internal Research Application -->
+                    <div class="bg-gray-900/60 p-6 rounded-xl border border-gray-700 hover:border-cyber-purple transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-3 group-hover:text-cyber-purple transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-microscope text-cyber-purple"></i> 內部研究團隊招募
+                            </h4>
+                            <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                若您對聲紋辨識、機器學習或資訊安全有熱忱，且希望參與核心技術開發。
+                            </p>
+                            <div class="bg-cyber-purple/10 border border-cyber-purple/30 rounded p-3 mb-4">
+                                <p class="text-xs text-cyber-purple flex items-start gap-1">
+                                    <i class="fa-solid fa-circle-info mt-0.5"></i>
+                                    <span>欲加入團隊內部研究，請務必透過官方 IG 或電子郵件聯繫並備註申請意願。</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-auto">
+                            <a href="https://www.instagram.com/phonosec_initiative/" target="_blank" class="flex-1 py-2 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
+                                <i class="fa-brands fa-instagram mr-1"></i> IG 申請
+                            </a>
+                            <a href="mailto:phonosec@gmail.com" class="flex-1 py-2 text-center rounded border border-gray-600 text-gray-300 hover:border-cyber-purple hover:text-cyber-purple transition-colors text-sm">
+                                <i class="fa-regular fa-envelope mr-1"></i> Email 申請
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">幽靈貓</h3>
-                    <p class="text-xs text-cyber-purple font-mono mb-2">QA Tester</p>
-                    <p class="text-sm text-gray-400">已參與團隊測試員</p>
                 </div>
             </div>
         </div>
