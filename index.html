@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonosec Initiative | 官方網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            black: '#05050A',
+                            dark: '#0A0A16',
+                            blue: '#00F0FF',
+                            purple: '#B026FF',
+                            gray: '#8A8D98'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #05050A;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00F0FF;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B026FF;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(10, 10, 22, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* Neon Text Utilities */
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+        }
+        .text-glow-purple {
+            text-shadow: 0 0 10px rgba(176, 38, 255, 0.7);
+        }
+
+        /* Scroll Reveal Classes (Handled by JS) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Terminal Style Scrollable text area */
+        .terminal-scroll {
+            max-height: 250px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,240,255,0.5) transparent;
+        }
+        .terminal-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,240,255,0.5);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyber-purple selection:text-white">
+
+    <!-- Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center glass-panel !border-x-0 !border-t-0 !rounded-none">
+            <div class="flex items-center gap-2 text-cyber-blue font-bold text-xl tracking-wider">
+                <i class="fa-solid fa-fingerprint text-cyber-purple"></i>
+                <span>PHONOSEC</span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-cyber-blue transition-colors">關於團隊</a>
+                <a href="#goals" class="hover:text-cyber-blue transition-colors">核心目標</a>
+                <a href="#departments" class="hover:text-cyber-blue transition-colors">研究部門</a>
+                <a href="#roadmap" class="hover:text-cyber-blue transition-colors">未來展望</a>
+                <a href="#team" class="hover:text-cyber-blue transition-colors">成員</a>
+            </div>
+            <!-- Mobile Menu Button (Simplified for UI, relies on scroll) -->
+            <a href="#contact" class="hidden md:block px-5 py-2 rounded-full bg-transparent border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 shadow-[0_0_10px_rgba(0,240,255,0.2)] hover:shadow-[0_0_15px_rgba(0,240,255,0.6)]">
+                聯繫我們
+            </a>
+            <button class="md:hidden text-cyber-blue"><i class="fa-solid fa-bars text-xl"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyber-blue/10 via-cyber-dark/50 to-cyber-black z-0"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+            <div class="inline-block mb-4 px-4 py-1 rounded-full border border-cyber-purple/50 bg-cyber-purple/10 text-cyber-purple text-sm font-mono animate-pulse-slow">
+                <i class="fa-solid fa-shield-halved mr-2"></i>Voiceprint & Anti-Spoofing Technology
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                <span class="text-white">Phonosec</span> 
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple text-glow-blue">Initiative</span>
+            </h1>
+            <div class="h-16 md:h-12 flex justify-center items-center">
+                <p id="typewriter-text" class="text-lg md:text-xl text-gray-300 font-mono font-light"></p><span class="animate-pulse w-2 h-6 bg-cyber-blue inline-block ml-1"></span>
+            </div>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="#departments" class="px-8 py-3 rounded bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired"></i> 探索研究室
+                </a>
+                <a href="#about" class="px-8 py-3 rounded border border-gray-600 hover:border-cyber-blue hover:text-cyber-blue transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-angle-down"></i> 了解團隊
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Origin Section -->
+    <section id="about" class="py-24 px-6 relative">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-10 h-1 bg-cyber-blue block"></span>團隊由來
+                </h2>
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyber-purple/10 rounded-full blur-3xl group-hover:bg-cyber-purple/20 transition-all"></div>
+                    <p class="text-gray-300 leading-relaxed text-lg mb-4">
+                        我們來自台灣南部自創微小型團隊。團隊啟發來自在準備模擬會考時，接觸到一道關於 <span class="text-cyber-blue font-semibold">AI 仿聲與個人聲紋特徵</span> 的試題。
+                    </p>
+                    <blockquote class="border-l-4 border-cyber-purple pl-4 my-6 italic text-gray-400">
+                        「AI仿聲需要由個人特徵來進行仿聲，才可能實現，並且雖然人耳一般聽不清楚，但如果使用儀器測量，會發現還是有微小差異」
+                    </blockquote>
+                    <p class="text-gray-300 leading-relaxed">
+                        當時我們就在想——<span class="text-white font-bold border-b border-cyber-blue pb-1">既然這樣，那為何不能逆向防禦呢？</span> 這就是 Phonosec 誕生的契機。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 reveal" style="transition-delay: 200ms;">
+                <div class="col-span-2 mb-2">
+                    <h3 class="text-xl font-bold text-cyber-blue mb-4">團隊講求 Core Values</h3>
+                </div>
+                <!-- Value Tags -->
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0s;">
+                    <i class="fa-solid fa-bullseye text-2xl text-cyber-purple"></i><span class="font-medium">高準確</span>
+                </div>
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0.2s;">
+                    <i class="fa-solid fa-bolt text-2xl text-cyber-blue"></i><span class="font-medium">高便利</span>
+                </div>
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0.4s;">
+                    <i class="fa-solid fa-microchip text-2xl text-cyber-purple"></i><span class="font-medium">低硬體需求</span>
+                </div>
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0.6s;">
+                    <i class="fa-solid fa-layer-group text-2xl text-cyber-blue"></i><span class="font-medium">高彈性 & 穩定</span>
+                </div>
+                <div class="glass-panel p-4 rounded-xl flex items-center gap-3 col-span-2 text-center justify-center border-cyber-purple/30">
+                    <i class="fa-solid fa-shield-virus text-xl text-cyber-purple"></i><span class="font-medium">高安全性與持續創新</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section id="goals" class="py-24 px-6 bg-cyber-dark/80 border-y border-gray-800/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center reveal">團隊目標 <span class="text-cyber-blue">Objectives</span></h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-6 rounded-2xl reveal hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue text-xl font-bold mb-4">01</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">聲紋身份驗證</h3>
+                    <p class="text-cyber-gray">準確提取個人聲紋特徵，確認是否為本人聲音，建立堅固的第一道防線。</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 rounded-full bg-cyber-purple/20 flex items-center justify-center text-cyber-purple text-xl font-bold mb-4">02</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">AI 仿聲與變聲偵測</h3>
+                    <p class="text-cyber-gray">精準辨識語音是否由 AI 生成或經過變聲處理，打擊深度偽造技術。</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 rounded-full bg-cyber-purple/20 flex items-center justify-center text-cyber-purple text-xl font-bold mb-4">03</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">安全與隱私防護</h3>
+                    <p class="text-cyber-gray">防止個人聲紋模型被盜用，並持續強化多層次防禦機制，保障個資安全。</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue text-xl font-bold mb-4">04</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">降低使用門檻</h3>
+                    <p class="text-cyber-gray">減少硬體佔用與門檻、提升自定義彈性與穩定性，並進一步提升便利、準確與快速性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments & Reports Section -->
+    <section id="departments" class="py-24 px-6 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute right-0 top-1/4 w-96 h-96 bg-cyber-blue/5 rounded-full blur-[100px] -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center reveal">研究部門與報告</h2>
+            <p class="text-center text-cyber-gray mb-16 max-w-2xl mx-auto reveal">四大核心實驗室，針對特徵提取、異常識別、傳輸與資安進行深度研發，建構完整的防偽生態系。</p>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Lab 1 -->
+                <div class="glass-panel rounded-2xl border border-gray-800 reveal group">
+                    <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
+                        <i class="fa-solid fa-wave-square text-cyber-blue"></i>
+                        <h3 class="font-mono font-bold text-lg">Voiceprint Extraction Lab</h3>
+                        <span class="ml-auto text-xs text-gray-500 font-mono">Status: Active</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-blue transition-colors">聲紋提取研究室</h4>
+                        <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">特徵提取：</strong> 採取聲學物理特徵擷取聲道形狀與發音器官物理特性。包含傳統特徵（MFCC, LFCC）與深度特徵（ResNet, ECAPA-TDNN 提取之 x-vector）。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">行為語音特徵：</strong> 分析發音習慣、語速、停頓、重音與方言。利用 WavLM 與 wav2vec 2.0 捕捉長時序特徵。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">文本關聯 (Text-Dependent)：</strong> 結合 ASR 模組，分析特定詞彙發音特異性，提升防範重放攻擊 (Replay Attack) 能力。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">環境適應：</strong> 估算房間衝擊響應 (RIR) 與雜訊型態進行反捲積，提升在不同硬體與空間的魯棒性。</p>
+                            <p class="text-gray-500 italic">[無法提供更多資訊]</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 3 (Anomaly) -->
+                <div class="glass-panel rounded-2xl border border-gray-800 reveal group" style="transition-delay: 100ms;">
+                    <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
+                        <i class="fa-solid fa-radar-pro text-cyber-purple"></i>
+                        <h3 class="font-mono font-bold text-lg">Anomaly Detection Lab</h3>
+                        <span class="ml-auto text-xs text-gray-500 font-mono">Status: Scanning</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-purple transition-colors">識別異常研究室</h4>
+                        <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">生理機制缺失：</strong> 檢測缺乏自然呼吸聲、換氣或吞嚥聲。識別生硬規律化的呼吸頻率。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">韻律異常：</strong> 偵測過於平滑的音高轉換(Overly smooth pitch transitions)及情緒起伏時的情感割裂感。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">背景音突兀：</strong> 揪出人聲極度乾淨卻無環境音，或背景雜訊呈現斷續不自然靜音的現象。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">聲學瑕疵 (Artifacts)：</strong> 偵測高頻微小瑕疵(摩擦聲、金屬回音)與金屬顆粒感(變聲器處理後)。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">變聲器破綻：</strong> 環境背景音同步變調、共振峰(Formant)失真(花栗鼠/巨人效應)、音域邊界破音偵測。</p>
+                            <p class="text-gray-500 italic">[無法提供更多資訊]</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 2 (Data) -->
+                <div class="glass-panel rounded-2xl border border-gray-800 reveal group">
+                    <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
+                        <i class="fa-solid fa-network-wired text-cyber-blue"></i>
+                        <h3 class="font-mono font-bold text-lg">Data Transmission Lab</h3>
+                        <span class="ml-auto text-xs text-gray-500 font-mono">Status: Encrypted</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-blue transition-colors">資料傳輸研究室</h4>
+                        <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">傳輸協定：</strong> 使用 Decimen Optical Transfer 技術進行傳輸。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">授權管理：</strong> 傳輸者能夠動態更改被傳輸者是否同意使用的權限。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">同步機制：</strong> 每10秒向伺服器抓取最新檔案包，每30秒強制抓取。若強制更新失敗，需手動更新後才可繼續使用以確保安全。</p>
+                            <p class="text-gray-500 italic">[無法提供更多資訊]</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 4 (Sec) -->
+                <div class="glass-panel rounded-2xl border border-gray-800 reveal group" style="transition-delay: 100ms;">
+                    <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
+                        <i class="fa-solid fa-shield-cat text-cyber-purple"></i>
+                        <h3 class="font-mono font-bold text-lg">Information Security Lab</h3>
+                        <span class="ml-auto text-xs text-gray-500 font-mono">Status: Locked</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-purple transition-colors">資訊安全研究室</h4>
+                        <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">防護機制：</strong> 將進行多包裝加密進行核心防護，抵禦逆向工程與數據竊取。</p>
+                            <p class="text-gray-500 italic mt-4">[高度機密 - 無法提供更多資訊]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Roadmap -->
+    <section id="roadmap" class="py-24 px-6 bg-cyber-dark/80 border-t border-gray-800/50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-10 text-center reveal">開發項目預計方向 <span class="text-sm font-normal text-cyber-purple bg-cyber-purple/20 px-3 py-1 rounded-full ml-2">規劃中</span></h2>
+            
+            <div class="glass-panel p-8 rounded-2xl reveal relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyber-blue to-cyber-purple"></div>
+                
+                <div class="mb-8 border-b border-gray-700/50 pb-6">
+                    <h3 class="text-gray-400 font-mono text-sm mb-2">TARGET PLATFORMS</h3>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded text-white">
+                            <i class="fa-brands fa-windows text-cyber-blue"></i> Windows 10/11
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded text-white">
+                            <i class="fa-brands fa-android text-green-400"></i> Android 13+
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-gray-400 font-mono text-sm mb-4">CORE FEATURES ROADMAP</h3>
+                <ul class="space-y-6 relative border-l border-gray-700 ml-3">
+                    <li class="pl-6 relative">
+                        <div class="absolute w-3 h-3 bg-cyber-blue rounded-full -left-1.5 top-1.5 shadow-[0_0_10px_#00F0FF]"></div>
+                        <h4 class="text-lg font-bold text-white mb-1">在地訓練個人聲紋模型</h4>
+                        <p class="text-gray-400 text-sm">保障資料不出設備，於本地端建立專屬的高精度聲紋特徵模型。</p>
+                    </li>
+                    <li class="pl-6 relative">
+                        <div class="absolute w-3 h-3 bg-cyber-purple rounded-full -left-1.5 top-1.5 shadow-[0_0_10px_#B026FF]"></div>
+                        <h4 class="text-lg font-bold text-white mb-1">全方位語音防偽偵測</h4>
+                        <p class="text-gray-400 text-sm">偵測 AI 仿聲、製聲、變聲，並精準驗證是否為指定使用者的真實聲音。</p>
+                    </li>
+                    <li class="pl-6 relative">
+                        <div class="absolute w-3 h-3 bg-gray-500 rounded-full -left-1.5 top-1.5"></div>
+                        <h4 class="text-lg font-bold text-white mb-1">信任共享機制</h4>
+                        <p class="text-gray-400 text-sm">在嚴格授權機制與加密保護下，支援將個人聲紋特徵安全地分享給信任對象。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-24 px-6 relative">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4 reveal">團隊成員 <span class="text-cyber-blue">Members</span></h2>
+            <p class="text-gray-400 mb-12 reveal">目前核心開發由一人負責，歡迎有興趣的朋友與我們聯繫討論。</p>
+
+            <div class="flex flex-wrap justify-center gap-8 reveal">
+                <!-- Founder -->
+                <div class="glass-panel p-6 rounded-2xl w-64 group hover:border-cyber-blue transition-colors">
+                    <div class="w-24 h-24 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-blue relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-shadow">
+                        <i class="fa-solid fa-user-astronaut text-4xl text-gray-400 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">小秋西米露</h3>
+                    <p class="text-xs text-cyber-blue font-mono mb-2">Founder / Core Dev</p>
+                    <p class="text-sm text-gray-400">團隊創辦人<br>團隊執行與決策人</p>
+                </div>
+
+                <!-- Tester 1 -->
+                <div class="glass-panel p-6 rounded-2xl w-56 group hover:border-cyber-purple transition-colors mt-0 md:mt-8">
+                    <div class="w-20 h-20 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-purple relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] transition-shadow">
+                        <i class="fa-solid fa-paw text-3xl text-gray-400 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">熊熊</h3>
+                    <p class="text-xs text-cyber-purple font-mono mb-2">QA Tester</p>
+                    <p class="text-sm text-gray-400">已參與團隊測試員</p>
+                </div>
+
+                <!-- Tester 2 -->
+                <div class="glass-panel p-6 rounded-2xl w-56 group hover:border-cyber-purple transition-colors mt-0 md:mt-8">
+                    <div class="w-20 h-20 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-purple relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] transition-shadow">
+                        <i class="fa-solid fa-ghost text-3xl text-gray-400 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">幽靈貓</h3>
+                    <p class="text-xs text-cyber-purple font-mono mb-2">QA Tester</p>
+                    <p class="text-sm text-gray-400">已參與團隊測試員</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-black py-12 px-6 border-t border-gray-800 relative z-10">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <div class="flex items-center gap-2 text-white font-bold text-xl mb-4">
+                    <i class="fa-solid fa-fingerprint text-cyber-purple"></i>
+                    <span>Phonosec Initiative</span>
+                </div>
+                <div class="bg-red-900/20 border border-red-900/50 p-4 rounded-lg inline-block">
+                    <h4 class="text-red-400 font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> 重要聲明</h4>
+                    <p class="text-gray-400 text-sm">研究目前仍處於早期探索階段，相關資料可能隨時或暫緩更新，也可能即時調整。</p>
+                </div>
+            </div>
+            
+            <div class="md:text-right">
+                <h4 class="text-white font-bold mb-4">聯繫團隊 Contact Us</h4>
+                <div class="flex flex-col md:items-end gap-3">
+                    <a href="https://www.instagram.com/phonosec_initiative/" target="_blank" class="text-gray-400 hover:text-cyber-purple transition-colors flex items-center gap-2 md:flex-row-reverse">
+                        <span>@phonosec_initiative</span> <i class="fa-brands fa-instagram text-xl"></i>
+                    </a>
+                    <a href="mailto:phonosec@gmail.com" class="text-gray-400 hover:text-cyber-blue transition-colors flex items-center gap-2 md:flex-row-reverse">
+                        <span>phonosec@gmail.com</span> <i class="fa-regular fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-600 text-xs mt-12 pt-6 border-t border-gray-900">
+            &copy; <script>document.write(new Date().getFullYear())</script> Phonosec Initiative. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // 1. Typewriter Effect for Hero Subtitle
+        const typeText = "專注於個人聲紋特徵提取、AI 仿聲偵測與語音防偽技術";
+        const typeElement = document.getElementById('typewriter-text');
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < typeText.length) {
+                typeElement.innerHTML += typeText.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 100); // Typing speed
+            }
+        }
+        
+        // Start typing slightly after load
+        setTimeout(typeWriter, 500);
+
+        // 2. Scroll Reveal Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15, // Trigger when 15% visible
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3. Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/80', 'shadow-lg');
+                navbar.querySelector('.glass-panel').classList.add('!bg-transparent', '!border-none', '!shadow-none');
+            } else {
+                navbar.classList.remove('bg-black/80', 'shadow-lg');
+                navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
+            }
+        });
+
+        // 4. Background Canvas Animation (Soundwave / Cyber Nodes)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.baseY = this.y;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 0.02 + 0.01;
+                // Random color between cyber blue and purple
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, ' : 'rgba(176, 38, 255, ';
+            }
+
+            update() {
+                // Wave motion
+                this.angle += this.speed;
+                this.y = this.baseY + Math.sin(this.angle) * 20;
+                
+                this.x += this.vx;
+                
+                // Wrap around
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + '0.5)';
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            let particleCount = Math.min(window.innerWidth / 15, 100); // Responsive count
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Update and draw particles
+            particles.forEach(p => p.update());
+            
+            // Draw connections (Network effect representing data transmission)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        // Opacity based on distance
+                        let opacity = 1 - (dist / 120);
+                        ctx.strokeStyle = `rgba(138, 141, 152, ${opacity * 0.15})`; // Subtle gray connection
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+                particles[i].draw();
+            }
+            
+            requestAnimationFrame(animateCanvas);
+        }
+        
+        animateCanvas();
+
+    </script>
+</body>
+</html>
