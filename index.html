@@ -153,14 +153,14 @@
     </div>
 
     <!-- Privacy & Terms Consent Modal (Responsive for Mobile) -->
-    <div id="consent-popup" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-50 w-full glass-panel p-5 sm:p-6 rounded-2xl border border-cyber-blue/30 shadow-[0_0_25px_rgba(0,240,255,0.2)] transform translate-y-32 opacity-0 transition-all duration-500 hidden">
-        <div class="flex items-start gap-3 mb-4">
-            <div class="w-10 h-10 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue shrink-0">
-                <i class="fa-solid fa-shield-halved"></i>
+    <div id="consent-popup" class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:max-w-sm z-50 w-auto glass-panel p-4 sm:p-6 rounded-2xl border border-cyber-blue/30 shadow-[0_0_25px_rgba(0,240,255,0.2)] transform translate-y-32 opacity-0 transition-all duration-500 hidden">
+        <div class="flex items-start gap-3 mb-3 sm:mb-4">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue shrink-0">
+                <i class="fa-solid fa-shield-halved text-sm sm:text-base"></i>
             </div>
             <div>
-                <h4 class="text-white font-bold text-base mb-1">隱私政策與服務條款</h4>
-                <p class="text-gray-300 text-xs leading-relaxed">
+                <h4 class="text-white font-bold text-sm sm:text-base mb-1">隱私政策與服務條款</h4>
+                <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
                     繼續瀏覽本網站即表示您同意我們的
                     <a href="https://sites.google.com/view/team-privacy-policy/%E9%A6%96%E9%A0%81" target="_blank" class="text-cyber-blue underline hover:text-cyber-purple transition-colors">隱私政策</a>
                     與
@@ -168,11 +168,11 @@
                 </p>
             </div>
         </div>
-        <div class="flex gap-3 justify-end">
-            <button id="consent-decline-btn" class="px-4 py-2 rounded border border-gray-600 text-gray-400 text-xs hover:border-red-500 hover:text-red-400 transition-colors cursor-pointer">
+        <div class="flex gap-2 sm:gap-3 justify-end">
+            <button id="consent-decline-btn" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded border border-gray-600 text-gray-400 text-xs hover:border-red-500 hover:text-red-400 transition-colors cursor-pointer">
                 不同意
             </button>
-            <button id="consent-accept-btn" class="px-4 py-2 rounded bg-gradient-to-r from-cyber-blue to-cyber-purple text-white text-xs font-bold hover:shadow-[0_0_15px_#00F0FF] transition-all cursor-pointer">
+            <button id="consent-accept-btn" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded bg-gradient-to-r from-cyber-blue to-cyber-purple text-white text-xs font-bold hover:shadow-[0_0_15px_#00F0FF] transition-all cursor-pointer">
                 同意並繼續
             </button>
         </div>
@@ -537,17 +537,46 @@
     </footer>
 
     <script>
-        // 1. Typewriter Effect for Hero Subtitle
-        const typeText = "專注於個人聲紋特徵提取、AI 仿聲偵測與語音防偽技術";
+        // 1. Rotating Typewriter Effect for Hero Subtitle
+        const phrases = [
+            "個人聲紋特徵提取技術",
+            "AI仿聲偵測與語音防偽技術",
+            "高疊加加密技術",
+            "高頻率高創新更新!",
+            "你，是人類嗎?可否相信?",
+            "成員招募中!",
+            "規劃更新中，敬請期待!"
+        ];
+        
         const typeElement = document.getElementById('typewriter-text');
-        let typeIndex = 0;
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
 
         function typeWriter() {
-            if (typeIndex < typeText.length) {
-                typeElement.innerHTML += typeText.charAt(typeIndex);
-                typeIndex++;
-                setTimeout(typeWriter, 100); // Typing speed
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typeElement.innerHTML = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50; // Deleting speed
+            } else {
+                typeElement.innerHTML = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100; // Typing speed
             }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typingSpeed = 2000; // Pause at end before deleting
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typingSpeed = 500; // Pause before next phrase
+            }
+
+            setTimeout(typeWriter, typingSpeed);
         }
         
         // Cinematic Intro & Boot Sequence Logic
