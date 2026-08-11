@@ -47,7 +47,6 @@
             overflow-x: hidden;
         }
 
-        /* Canvas Background */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -59,7 +58,6 @@
             opacity: 0.6;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -74,7 +72,6 @@
             background: #B026FF;
         }
 
-        /* Glassmorphism Panels */
         .glass-panel {
             background: rgba(10, 10, 22, 0.6);
             backdrop-filter: blur(12px);
@@ -89,7 +86,6 @@
             transform: translateY(-5px);
         }
 
-        /* Neon Text Utilities */
         .text-glow-blue {
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
         }
@@ -97,7 +93,6 @@
             text-shadow: 0 0 10px rgba(176, 38, 255, 0.7);
         }
 
-        /* Scroll Reveal Classes (Handled by JS) */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -108,7 +103,6 @@
             transform: translateY(0);
         }
 
-        /* Terminal Style Scrollable text area */
         .terminal-scroll {
             max-height: 250px;
             overflow-y: auto;
@@ -126,10 +120,8 @@
 <body class="antialiased selection:bg-cyber-purple selection:text-white">
 
     <div id="intro-screen" class="fixed inset-0 z-[9999] bg-[#05050A] flex flex-col items-center justify-center transition-all duration-1000 overflow-hidden">
-        <!-- Background Grid Matrix -->
         <div class="absolute inset-0 bg-[radial-gradient(#00f0ff_1px,transparent_1px)] [background-size:32px_32px] opacity-10"></div>
         
-        <!-- Central Holographic HUD Rings -->
         <div class="relative flex items-center justify-center w-56 h-56 mb-8">
             <div class="absolute inset-0 rounded-full border border-cyber-blue/30 animate-spin" style="animation-duration: 12s;"></div>
             <div class="absolute inset-4 rounded-full border border-dashed border-cyber-purple/40 animate-spin" style="animation-duration: 18s; animation-direction: reverse;"></div>
@@ -140,13 +132,11 @@
             </div>
         </div>
 
-        <!-- Cyber Boot Text Logs -->
         <div class="text-center font-mono max-w-md px-4 relative z-10">
             <div class="text-xs text-cyber-blue tracking-widest mb-2 font-bold text-glow-blue">[ SECURE AUDIO ENCLAVE BOOT ]</div>
             <div id="boot-log-text" class="text-sm text-gray-300 h-8 flex items-center justify-center tracking-wider">INITIALIZING NEURAL NODES...</div>
         </div>
 
-        <!-- Enter System Button -->
         <button id="enter-sys-btn" class="mt-8 px-8 py-3 rounded-full bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-mono text-sm font-bold tracking-wider transition-all duration-300 hover:shadow-[0_0_25px_#00F0FF] hover:scale-105 cursor-pointer relative z-10 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
             [ 進入 PHONOSEC 系統 ]
         </button>
@@ -154,7 +144,6 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center glass-panel !border-x-0 !border-t-0 !rounded-none relative z-20">
             <div class="flex items-center gap-2 text-cyber-blue font-bold text-xl tracking-wider">
@@ -168,15 +157,12 @@
                 <a href="#roadmap" class="hover:text-cyber-blue transition-colors">未來展望</a>
                 <a href="#team" class="hover:text-cyber-blue transition-colors">成員</a>
             </div>
-            <!-- Desktop Contact Button -->
             <a href="#contact" class="hidden md:block px-5 py-2 rounded-full bg-transparent border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 shadow-[0_0_10px_rgba(0,240,255,0.2)] hover:shadow-[0_0_15px_rgba(0,240,255,0.6)]">
                 聯繫我們
             </a>
-            <!-- Mobile Menu Toggle Button -->
             <button id="mobile-menu-btn" class="md:hidden text-cyber-blue text-2xl focus:outline-none relative z-30 transition-transform"><i class="fa-solid fa-bars"></i></button>
         </div>
         
-        <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="fixed inset-0 bg-cyber-black/95 backdrop-blur-xl flex-col items-center justify-center gap-8 hidden opacity-0 transition-opacity duration-300 z-10">
             <a href="#about" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">關於團隊</a>
             <a href="#goals" class="mobile-link text-2xl font-bold text-gray-300 hover:text-cyber-blue transition-colors">核心目標</a>
@@ -236,7 +222,6 @@
                 <div class="col-span-1 sm:col-span-2 mb-2 text-center sm:text-left">
                     <h3 class="text-xl font-bold text-cyber-blue mb-2">團隊講求 Core Values</h3>
                 </div>
-                <!-- Value Tags -->
                 <div class="glass-panel p-4 rounded-xl flex items-center gap-3 animate-float" style="animation-delay: 0s;">
                     <i class="fa-solid fa-bullseye text-2xl text-cyber-purple"></i><span class="font-medium">高準確</span>
                 </div>
@@ -286,7 +271,6 @@
     </section>
 
     <section id="departments" class="py-24 px-6 relative overflow-hidden">
-        <!-- Decoration -->
         <div class="absolute right-0 top-1/4 w-96 h-96 bg-cyber-blue/5 rounded-full blur-[100px] -z-10"></div>
         
         <div class="max-w-7xl mx-auto">
@@ -295,7 +279,6 @@
 
             <div class="grid lg:grid-cols-2 gap-8">
                 
-                <!-- Lab 1 -->
                 <div class="glass-panel rounded-2xl border border-gray-800 reveal group">
                     <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
                         <i class="fa-solid fa-wave-square text-cyber-blue"></i>
@@ -314,7 +297,6 @@
                     </div>
                 </div>
 
-                <!-- Lab 3 (Anomaly) -->
                 <div class="glass-panel rounded-2xl border border-gray-800 reveal group" style="transition-delay: 100ms;">
                     <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
                         <i class="fa-solid fa-radar-pro text-cyber-purple"></i>
@@ -334,7 +316,6 @@
                     </div>
                 </div>
 
-                <!-- Lab 2 (Data) -->
                 <div class="glass-panel rounded-2xl border border-gray-800 reveal group">
                     <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
                         <i class="fa-solid fa-network-wired text-cyber-blue"></i>
@@ -352,7 +333,6 @@
                     </div>
                 </div>
 
-                <!-- Lab 4 (Sec) -->
                 <div class="glass-panel rounded-2xl border border-gray-800 reveal group" style="transition-delay: 100ms;">
                     <div class="bg-gray-900/80 p-4 border-b border-gray-800 rounded-t-2xl flex items-center gap-3">
                         <i class="fa-solid fa-shield-cat text-cyber-purple"></i>
@@ -394,18 +374,18 @@
                 <ul class="space-y-6 relative border-l border-gray-700 ml-3">
                     <li class="pl-6 relative">
                         <div class="absolute w-3 h-3 bg-cyber-blue rounded-full -left-1.5 top-1.5 shadow-[0_0_10px_#00F0FF]"></div>
-                        <h4 class="text-lg font-bold text-white mb-1">在地訓練個人聲紋模型</h4>
+                        <h4 class="text-lg font-bold text-white mb-1">在地建立個人聲紋模型</h4>
                         <p class="text-gray-400 text-sm">保障資料不出設備，於本地端建立專屬的高精度聲紋特徵模型。</p>
                     </li>
                     <li class="pl-6 relative">
                         <div class="absolute w-3 h-3 bg-cyber-purple rounded-full -left-1.5 top-1.5 shadow-[0_0_10px_#B026FF]"></div>
                         <h4 class="text-lg font-bold text-white mb-1">全方位語音防偽偵測</h4>
-                        <p class="text-gray-400 text-sm">偵測 AI 仿聲、製聲、變聲，並精準驗證是否為指定使用者的真實聲音。</p>
+                        <p class="text-gray-400 text-sm">偵測AI仿聲、製聲、變聲，並精準驗證是否為指定使用者的真實聲音。</p>
                     </li>
                     <li class="pl-6 relative">
                         <div class="absolute w-3 h-3 bg-gray-500 rounded-full -left-1.5 top-1.5"></div>
                         <h4 class="text-lg font-bold text-white mb-1">信任共享機制</h4>
-                        <p class="text-gray-400 text-sm">在嚴格授權機制與加密保護下，支援將個人聲紋特徵安全地分享給信任對象。</p>
+                        <p class="text-gray-400 text-sm">在嚴格授權機制與加密保護下，支援將個人聲紋特徵安全地不利用任何連線方式分享給信任對象。</p>
                     </li>
                 </ul>
             </div>
@@ -418,7 +398,6 @@
             <p class="text-gray-400 mb-12 reveal">目前核心開發由一人負責，歡迎有興趣的朋友與我們聯繫討論。</p>
 
             <div class="flex flex-wrap justify-center gap-8 reveal mb-16">
-                <!-- Founder -->
                 <div class="glass-panel p-6 rounded-2xl w-64 group hover:border-cyber-blue transition-colors">
                     <div class="w-24 h-24 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-4 border-2 border-cyber-blue relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-shadow">
                         <i class="fa-solid fa-user-astronaut text-4xl text-gray-400 group-hover:text-white transition-colors"></i>
@@ -429,13 +408,11 @@
                 </div>
             </div>
 
-            <!-- Join Us Action Area -->
             <div class="glass-panel max-w-3xl mx-auto p-8 rounded-2xl reveal relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-cyber-blue/5 to-cyber-purple/5"></div>
                 <h3 class="text-2xl font-bold text-white mb-8 relative z-10 tracking-wider">加入我們 <span class="text-cyber-blue text-glow-blue">Join Phonosec</span></h3>
                 
                 <div class="grid md:grid-cols-2 gap-6 relative z-10 text-left">
-                    <!-- Tester Application -->
                     <div class="bg-gray-900/60 p-6 rounded-xl border border-gray-700 hover:border-cyber-blue transition-all duration-300 flex flex-col justify-between group">
                         <div>
                             <h4 class="text-lg font-bold text-white mb-3 group-hover:text-cyber-blue transition-colors flex items-center gap-2">
@@ -450,7 +427,6 @@
                         </a>
                     </div>
 
-                    <!-- Internal Research Application -->
                     <div class="bg-gray-900/60 p-6 rounded-xl border border-gray-700 hover:border-cyber-purple transition-all duration-300 flex flex-col justify-between group">
                         <div>
                             <h4 class="text-lg font-bold text-white mb-3 group-hover:text-cyber-purple transition-colors flex items-center gap-2">
@@ -511,20 +487,45 @@
     </footer>
 
     <script>
-        // 1. Typewriter Effect for Hero Subtitle
-        const typeText = "專注於個人聲紋特徵提取、AI 仿聲偵測與語音防偽技術";
-        const typeElement = document.getElementById('typewriter-text');
-        let typeIndex = 0;
+        const typeTexts = [
+            "專注於個人聲紋特徵提取",
+            "AI仿聲偵測與語音防偽技術",
+            "高疊加加密防盜防偽技術",
+            "端到端無中間伺服傳輸",
+            "高頻率高品質高分辨技術",
+            "你，是人類嗎?可否相信?",
+            "製作規劃中，敬請期待!",
+        ];
+        const typeElement = document.getElementById('typewriter-text')
+        let textArrayIndex = 0; 
+        let charIndex = 0;      
+        let isDeleting = false; 
 
         function typeWriter() {
-            if (typeIndex < typeText.length) {
-                typeElement.innerHTML += typeText.charAt(typeIndex);
-                typeIndex++;
-                setTimeout(typeWriter, 100); // Typing speed
+            const currentText = typeTexts[textArrayIndex];
+            
+            if (isDeleting) {
+                typeElement.innerHTML = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeElement.innerHTML = currentText.substring(0, charIndex + 1);
+                charIndex++;
             }
+
+            let typeSpeed = isDeleting ? 40 : 100; 
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textArrayIndex = (textArrayIndex + 1) % typeTexts.length; 
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
         }
         
-        // Cinematic Intro & Boot Sequence Logic
         window.addEventListener('load', () => {
             const introScreen = document.getElementById('intro-screen');
             const bootLog = document.getElementById('boot-log-text');
@@ -553,13 +554,12 @@
                 introScreen.classList.add('opacity-0', 'scale-110', 'pointer-events-none');
                 setTimeout(() => {
                     introScreen.style.display = 'none';
-                    setTimeout(typeWriter, 300);
+                    setTimeout(typeWriter, 300); 
                 }, 1000);
             }
 
             enterBtn.addEventListener('click', dismissIntro);
             
-            // Auto dismiss safety fallback after logs finish
             setTimeout(() => {
                 if (introScreen.style.display !== 'none') {
                     dismissIntro();
@@ -567,25 +567,23 @@
             }, 3500);
         });
 
-        // 2. Scroll Reveal Observer
         const revealElements = document.querySelectorAll('.reveal');
         
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target); // Only animate once
+                    observer.unobserve(entry.target); 
                 }
             });
         }, {
             root: null,
-            threshold: 0.15, // Trigger when 15% visible
+            threshold: 0.15, 
             rootMargin: "0px 0px -50px 0px"
         });
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // 3. Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -593,14 +591,12 @@
                 navbar.querySelector('.glass-panel').classList.add('!bg-transparent', '!border-none', '!shadow-none');
             } else {
                 navbar.classList.remove('bg-black/80', 'shadow-lg');
-                // Only restore style if mobile menu is NOT open
                 if (!isMenuOpen) {
                     navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
                 }
             }
         });
 
-        // 3.5 Mobile Menu Logic (Hamburger & Prevent Scroll)
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -610,26 +606,22 @@
         function toggleMenu() {
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
-                // Open Menu
                 mobileMenu.classList.remove('hidden');
                 setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
                 mobileMenu.classList.add('flex');
-                document.body.style.overflow = 'hidden'; // Lock background scroll
+                document.body.style.overflow = 'hidden'; 
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
-                // Ensure navbar bg is transparent when menu is open
                 navbar.querySelector('.glass-panel').classList.add('!bg-transparent', '!border-none', '!shadow-none');
             } else {
-                // Close Menu
                 mobileMenu.classList.add('opacity-0');
                 setTimeout(() => {
                     mobileMenu.classList.add('hidden');
                     mobileMenu.classList.remove('flex');
-                }, 300); // match duration-300
-                document.body.style.overflow = ''; // Restore background scroll
+                }, 300); 
+                document.body.style.overflow = ''; 
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                // Restore navbar style if at top
                 if (window.scrollY <= 50) {
                     navbar.querySelector('.glass-panel').classList.remove('!bg-transparent', '!border-none', '!shadow-none');
                 }
@@ -643,7 +635,6 @@
             });
         });
 
-        // 4. Background Canvas Animation (Soundwave / Cyber Nodes)
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -666,18 +657,15 @@
                 this.baseY = this.y;
                 this.angle = Math.random() * Math.PI * 2;
                 this.speed = Math.random() * 0.02 + 0.01;
-                // Random color between cyber blue and purple
                 this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, ' : 'rgba(176, 38, 255, ';
             }
 
             update() {
-                // Wave motion
                 this.angle += this.speed;
                 this.y = this.baseY + Math.sin(this.angle) * 20;
                 
                 this.x += this.vx;
                 
-                // Wrap around
                 if (this.x > width) this.x = 0;
                 if (this.x < 0) this.x = width;
             }
@@ -690,10 +678,9 @@
             }
         }
 
-        // Initialize particles
         function initParticles() {
             particles = [];
-            let particleCount = Math.min(window.innerWidth / 15, 100); // Responsive count
+            let particleCount = Math.min(window.innerWidth / 15, 100); 
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
@@ -703,10 +690,8 @@
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
             
-            // Update and draw particles
             particles.forEach(p => p.update());
             
-            // Draw connections (Network effect representing data transmission)
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -717,9 +702,8 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        // Opacity based on distance
                         let opacity = 1 - (dist / 120);
-                        ctx.strokeStyle = `rgba(138, 141, 152, ${opacity * 0.15})`; // Subtle gray connection
+                        ctx.strokeStyle = `rgba(138, 141, 152, ${opacity * 0.15})`; 
                         ctx.lineWidth = 1;
                         ctx.stroke();
                     }
