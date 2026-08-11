@@ -152,6 +152,32 @@
         </button>
     </div>
 
+    <!-- Privacy & Terms Consent Modal (Bottom Right) -->
+    <div id="consent-popup" class="fixed bottom-6 right-6 z-50 max-w-sm w-full glass-panel p-6 rounded-2xl border border-cyber-blue/30 shadow-[0_0_25px_rgba(0,240,255,0.2)] transform translate-y-32 opacity-0 transition-all duration-500 hidden">
+        <div class="flex items-start gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue shrink-0">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-base mb-1">隱私政策與服務條款</h4>
+                <p class="text-gray-300 text-xs leading-relaxed">
+                    繼續瀏覽本網站即表示您同意我們的
+                    <a href="https://sites.google.com/view/team-privacy-policy/%E9%A6%96%E9%A0%81" target="_blank" class="text-cyber-blue underline hover:text-cyber-purple transition-colors">隱私政策</a>
+                    與
+                    <a href="https://sites.google.com/view/team-terms-of-use/%E9%A6%96%E9%A0%81" target="_blank" class="text-cyber-blue underline hover:text-cyber-purple transition-colors">條款政策</a>。
+                </p>
+            </div>
+        </div>
+        <div class="flex gap-3 justify-end">
+            <button id="consent-decline-btn" class="px-4 py-2 rounded border border-gray-600 text-gray-400 text-xs hover:border-red-500 hover:text-red-400 transition-colors cursor-pointer">
+                不同意
+            </button>
+            <button id="consent-accept-btn" class="px-4 py-2 rounded bg-gradient-to-r from-cyber-blue to-cyber-purple text-white text-xs font-bold hover:shadow-[0_0_15px_#00F0FF] transition-all cursor-pointer">
+                同意並繼續
+            </button>
+        </div>
+    </div>
+
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
@@ -528,10 +554,12 @@
         window.addEventListener('load', () => {
             // Lock scrolling and hide scrollbar during intro animation
             document.body.style.overflow = 'hidden';
+            window.scrollTo({ top: 0, behavior: 'instant' });
 
             const introScreen = document.getElementById('intro-screen');
             const bootLog = document.getElementById('boot-log-text');
             const enterBtn = document.getElementById('enter-sys-btn');
+            const consentPopup = document.getElementById('consent-popup');
 
             const logs = [
                 "ESTABLISHING VOICE NEURAL MESH...",
@@ -552,6 +580,34 @@
                 }
             }, 650);
 
+            function showConsentPopup() {
+                consentPopup.classList.remove('hidden');
+                setTimeout(() => {
+                    consentPopup.classList.remove('translate-y-32', 'opacity-0');
+                }, 50);
+            }
+
+            function showDeclinedNotice() {
+                if (document.getElementById('declined-badge')) return;
+                const badge = document.createElement('div');
+                badge.id = 'declined-badge';
+                badge.className = 'fixed bottom-6 right-6 z-50 glass-panel px-4 py-3 rounded-xl border border-red-500/30 shadow-lg flex items-center gap-3 text-xs text-gray-300 animate-bounce';
+                badge.innerHTML = `
+                    <span><i class="fa-solid fa-triangle-exclamation text-red-400 mr-1.5"></i>您已拒絕隱私條款</span>
+                    <button id="reopen-consent" class="text-cyber-blue underline hover:text-white ml-2 cursor-pointer">重新考慮</button>
+                `;
+                document.body.appendChild(badge);
+
+                document.getElementById('reopen-consent').addEventListener('click', () => {
+                    badge.remove();
+                    const consentPopup = document.getElementById('consent-popup');
+                    consentPopup.classList.remove('hidden');
+                    setTimeout(() => {
+                        consentPopup.classList.remove('translate-y-32', 'opacity-0');
+                    }, 50);
+                });
+            }
+
             function dismissIntro() {
                 // Restore scroll and reset scroll position to top
                 document.body.style.overflow = '';
@@ -561,6 +617,7 @@
                 setTimeout(() => {
                     introScreen.style.display = 'none';
                     setTimeout(typeWriter, 300);
+                    showConsentPopup();
                 }, 1000);
             }
 
@@ -572,6 +629,23 @@
                     dismissIntro();
                 }
             }, 3500);
+
+            // Consent popup actions
+            const acceptBtn = document.getElementById('consent-accept-btn');
+            const declineBtn = document.getElementById('consent-decline-btn');
+
+            acceptBtn.addEventListener('click', () => {
+                consentPopup.classList.add('translate-y-32', 'opacity-0');
+                setTimeout(() => consentPopup.classList.add('hidden'), 500);
+            });
+
+            declineBtn.addEventListener('click', () => {
+                consentPopup.classList.add('translate-y-32', 'opacity-0');
+                setTimeout(() => {
+                    consentPopup.classList.add('hidden');
+                    showDeclinedNotice();
+                }, 500);
+            });
         });
 
         // 2. Scroll Reveal Observer
