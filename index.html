@@ -342,10 +342,10 @@
                     <div class="p-6">
                         <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-blue transition-colors">聲紋提取研究室</h4>
                         <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
-                            <p><span class="text-cyber-purple">></span> <strong class="text-white">特徵提取：</strong> 採取聲學物理特徵擷取聲道形狀與發音器官物理特性。包含傳統特徵（MFCC, LFCC）與深度特徵（ResNet, ECAPA-TDNN 提取之 x-vector）。</p>
-                            <p><span class="text-cyber-purple">></span> <strong class="text-white">行為語音特徵：</strong> 分析發音習慣、語速、停頓、重音與方言。利用 WavLM 與 wav2vec 2.0 捕捉長時序特徵。</p>
-                            <p><span class="text-cyber-purple">></span> <strong class="text-white">文本關聯 (Text-Dependent)：</strong> 結合 ASR 模組，分析特定詞彙發音特異性，提升防範重放攻擊 (Replay Attack) 能力。</p>
-                            <p><span class="text-cyber-purple">></span> <strong class="text-white">環境適應：</strong> 估算房間衝擊響應 (RIR) 與雜訊型態進行反捲積，提升在不同硬體與空間的魯棒性。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">特徵提取：</strong> 採取聲學物理特徵擷取聲道形狀與發音器官物理特性。包含傳統特徵與深度特徵。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">行為語音特徵：</strong> 分析發音習慣、語速、停頓、重音與方言。利用多技術捕捉長時序特徵。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">文本關聯 (Text-Dependent)：</strong> 結合模組，分析特定詞彙發音特異性，提升防範重放攻擊能力。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">環境適應：</strong> 估算房間衝擊響應與雜訊型態進行反捲積，提升在不同硬體與空間的魯棒性。</p>
                             <p class="text-gray-500 italic">[無法提供更多資訊]</p>
                         </div>
                     </div>
@@ -361,11 +361,11 @@
                     <div class="p-6">
                         <h4 class="text-xl font-bold mb-2 text-white group-hover:text-cyber-purple transition-colors">識別異常研究室</h4>
                         <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
-                            <p><span class="text-cyber-blue">></span> <strong class="text-white">生理機制缺失：</strong> 檢測缺乏自然呼吸聲、換氣或吞嚥聲。識別生硬規律化的呼吸頻率。</p>
-                            <p><span class="text-cyber-blue">></span> <strong class="text-white">韻律異常：</strong> 偵測過於平滑的音高轉換(Overly smooth pitch transitions)及情緒起伏時的情感割裂感。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">生理機制缺失：</strong> 檢測缺乏自然呼吸聲、換氣或吞嚥聲。識別規律化的呼吸頻率。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">韻律異常：</strong> 偵測過於平滑的音高轉換及情緒起伏時的情感割裂感。</p>
                             <p><span class="text-cyber-blue">></span> <strong class="text-white">背景音突兀：</strong> 揪出人聲極度乾淨卻無環境音，或背景雜訊呈現斷續不自然靜音的現象。</p>
                             <p><span class="text-cyber-blue">></span> <strong class="text-white">聲學瑕疵 (Artifacts)：</strong> 偵測高頻微小瑕疵(摩擦聲、金屬回音)與金屬顆粒感(變聲器處理後)。</p>
-                            <p><span class="text-cyber-blue">></span> <strong class="text-white">變聲器破綻：</strong> 環境背景音同步變調、共振峰(Formant)失真(花栗鼠/巨人效應)、音域邊界破音偵測。</p>
+                            <p><span class="text-cyber-blue">></span> <strong class="text-white">變聲器破綻：</strong> 環境背景音同步變調、共振峰失真、音域邊界破音偵測。</p>
                             <p class="text-gray-500 italic">[無法提供更多資訊]</p>
                         </div>
                     </div>
@@ -383,7 +383,7 @@
                         <div class="terminal-scroll text-sm text-gray-300 space-y-3 font-mono">
                             <p><span class="text-cyber-purple">></span> <strong class="text-white">傳輸協定：</strong> 使用 Decimen Optical Transfer 技術進行傳輸。</p>
                             <p><span class="text-cyber-purple">></span> <strong class="text-white">授權管理：</strong> 傳輸者能夠動態更改被傳輸者是否同意使用的權限。</p>
-                            <p><span class="text-cyber-purple">></span> <strong class="text-white">同步機制：</strong> 每10秒向伺服器抓取最新檔案包，每30秒強制抓取。若強制更新失敗，需手動更新後才可繼續使用以確保安全。</p>
+                            <p><span class="text-cyber-purple">></span> <strong class="text-white">同步機制：</strong> 每10分鐘向伺服器抓取最新檔案包，1分鐘內強制抓取。若強制更新失敗，需手動更新後才可繼續使用以確保安全。</p>
                             <p class="text-gray-500 italic">[無法提供更多資訊]</p>
                         </div>
                     </div>
@@ -550,9 +550,11 @@
     <script>
         // 最新消息內容陣列 (可在此自由新增、修改或刪除消息)
         const newsItems = [
+            "新頁面已更新!感謝您的查看與支持!",
             "最新消息！將計畫新出部分部門！",
             "招募進行中：誠摯邀請測試員與內部研究成員加入團隊！",
-            "規劃持續更新中，敬請關注我們的最新技術進展。"
+            "規劃持續更新中，敬請關注我們的最新技術進展。",
+            "最新進展!目前已建立伺服器、使用端程式設計與封包秘密傳送!"
         ];
 
         // 最新消息輪播邏輯
