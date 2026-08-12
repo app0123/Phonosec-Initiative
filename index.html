@@ -213,10 +213,21 @@
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-12">
         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyber-blue/10 via-cyber-dark/50 to-cyber-black z-0"></div>
         
         <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+            
+            <!-- 最新消息輪播布告欄 (News Bulletin Board) -->
+            <div class="mb-6 glass-panel px-4 py-2.5 rounded-full border border-cyber-purple/30 max-w-2xl mx-auto flex items-center justify-center gap-3 shadow-[0_0_15px_rgba(176,38,255,0.15)]">
+                <span class="bg-cyber-purple/20 text-cyber-purple border border-cyber-purple/40 text-xs font-mono font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shrink-0">
+                    <i class="fa-solid fa-bullhorn text-[10px] animate-bounce"></i> NEWS
+                </span>
+                <div class="text-xs md:text-sm text-gray-200 font-mono text-left transition-opacity duration-500 opacity-100 flex-1 overflow-hidden" id="news-bulletin-text">
+                    <!-- 消息內容將由 JS 自動動態渲染與輪播 -->
+                </div>
+            </div>
+
             <div class="inline-block mb-4 px-4 py-1 rounded-full border border-cyber-purple/50 bg-cyber-purple/10 text-cyber-purple text-sm font-mono animate-pulse-slow">
                 <i class="fa-solid fa-shield-halved mr-2"></i>Voiceprint & Anti-Spoofing Technology
             </div>
@@ -537,6 +548,35 @@
     </footer>
 
     <script>
+        // 最新消息內容陣列 (可在此自由新增、修改或刪除消息)
+        const newsItems = [
+            "最新消息！將計畫新出部分部門！",
+            "招募進行中：誠摯邀請測試員與內部研究成員加入團隊！",
+            "規劃持續更新中，敬請關注我們的最新技術進展。"
+        ];
+
+        // 最新消息輪播邏輯
+        let currentNewsIndex = 0;
+        const newsElement = document.getElementById('news-bulletin-text');
+
+        function updateNewsBulletin() {
+            if (!newsElement || newsItems.length === 0) return;
+            
+            // 淡出效果
+            newsElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                newsElement.innerText = newsItems[currentNewsIndex];
+                // 淡入效果
+                newsElement.style.opacity = '1';
+                currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
+            }, 500); // 配合 CSS 轉場時間
+        }
+
+        // 頁面初始化載入與定時器 (每 4 秒切換一次消息)
+        updateNewsBulletin();
+        setInterval(updateNewsBulletin, 4000);
+
         // 1. Rotating Typewriter Effect for Hero Subtitle
         const phrases = [
             "個人聲紋特徵提取技術",
